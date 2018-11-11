@@ -1,4 +1,5 @@
 ﻿/** Jonathan So, jds7523@rit.edu
+ * Noah Smith, nes9968@rit.edu
  * Handles player movement, including controls for setting the gravity of the player.
  */
 using System.Collections;
@@ -20,6 +21,11 @@ public class PlayerMovement : MonoBehaviour {
 	private Vector2 GRAV_LEFT = new Vector3(-2.5f, 0.0f);
 	private Vector2 GRAV_RIGHT = new Vector3(2.5f, 0.0f);
 
+    private enum MOVE { LEFT, RIGHT };
+    private MOVE currentMovement;
+    public Vector3 currentPos;
+    float[] jStick; // store the value of joycon stick position
+
 	// Set the initial gravity vector to point down.
 	private void Awake() {
 		Physics2D.gravity = GRAV_DOWN;
@@ -30,7 +36,9 @@ public class PlayerMovement : MonoBehaviour {
 	private void Start() {
 		// Get the public Joycon object attached to the JoyconManager in scene
 		j = JoyconManager.Instance.j;
-	}
+
+        currentPos = transform.position;
+    }
 
 	/** Checks the controller for its acceleration and switches gravity based on the controller.
 	 * Also makes sure we don't call a Gravity Switch when it's not necessary (e.g calling a GravitySwitch(DOWN) when we're already pointing down).
@@ -67,9 +75,46 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		// Rumble the controller for feedback.
 		if (j != null) {
-			j.SetRumble (160, 320, 0.6f, 200);
+			//j.SetRumble (160, 320, 0.6f, 200);
 		}
 	}
+
+    /* Changes position of the player
+     * Changes position.x or position.y relative to the direction of gravity
+     */
+    private void Movement(MOVE tempMove)
+    {
+        if (currGrav.Equals(GRAVITY.UP) || currGrav.Equals(GRAVITY.DOWN))
+        {
+            if (tempMove.Equals(MOVE.LEFT))
+            {
+                currentPos.x += -0.05f;
+                currentMovement = MOVE.LEFT;
+                transform.position = currentPos;
+            }
+            else if (tempMove.Equals(MOVE.RIGHT))
+            {
+                currentPos.x += 0.05f;
+                currentMovement = MOVE.RIGHT;
+                transform.position = currentPos;
+            }
+        }
+        else if (currGrav.Equals(GRAVITY.LEFT) || currGrav.Equals(GRAVITY.RIGHT))
+        {
+            if (tempMove.Equals(MOVE.LEFT))
+            {
+                currentPos.y += -0.05f;
+                currentMovement = MOVE.LEFT;
+                transform.position = currentPos;
+            }
+            else if (tempMove.Equals(MOVE.RIGHT))
+            {
+                currentPos.y += 0.05f;
+                currentMovement = MOVE.RIGHT;
+                transform.position = currentPos;
+            }
+        }
+    }
 
 	/** Handles both controller and keyboard inputs for gravity switching.
 	 * Checks our current gravity against the player's desired gravity, and, 
@@ -92,6 +137,70 @@ public class PlayerMovement : MonoBehaviour {
 			GravitySwitch(GRAVITY.RIGHT);
 		}
 
+        currentPos = transform.position;
+        // Keyboard inputs for player movement
+        if (Input.GetKey(KeyCode.A))
+        {
+            Movement(MOVE.LEFT);
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            Movement(MOVE.RIGHT);
+        }
 
-	}
+        // switch stick controls
+        if (j != null)
+        {
+            jStick = j.GetStick(); // jStick[0] is x position of stick, jStick[1] is y position
+            if (currGrav.Equals(GRAVITY.DOWN))
+            {
+                if (jStick[1] > 0.0f) // joystick is to the left
+                {
+                    Movement(MOVE.LEFT);
+                }
+                else if (jStick[1] < 0.0f) // joystick is to the right
+                {
+                    Movement(MOVE.RIGHT);
+                }
+            }
+            else if (currGrav.Equals(GRAVITY.UP))
+            {
+                if (jStick[1] < 0.0f) // joystick is to the left
+                {
+                    Movement(MOVE.LEFT);
+                }
+                else if (jStick[1] > 0.0f) // joystick is to the right
+                {
+                    Movement(MOVE.RIGHT);
+                }
+            }
+            else if (currGrav.Equals(GRAVITY.RIGHT))
+            {
+                if (jStick[0] < 0.0f) // joystick is to the left
+                {
+                    Movement(MOVE.LEFT);
+                }
+                else if (jStick[0] > 0.0f) // joystick is to the right
+                {
+                    Movement(MOVE.RIGHT);
+                }
+            }
+            else if (currGrav.Equals(GRAVITY.LEFT))
+            {
+                if (jStick[0] > 0.0f) // joystick is to the left
+                {
+                    Movement(MOVE.LEFT);
+                }
+                else if (jStick[0] < 0.0f) // joystick is to the right
+                {
+                    Movement(MOVE.RIGHT);
+                }
+            }
+
+        }
+
+
+
+
+        }
 }
