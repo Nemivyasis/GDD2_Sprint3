@@ -26,10 +26,14 @@ public class PlayerMovement : MonoBehaviour {
     public Vector3 currentPos;
     float[] jStick; // store the value of joycon stick position
 
+    ResetDeathManager deathCheck;
+
 	// Set the initial gravity vector to point down.
 	private void Awake() {
 		Physics2D.gravity = GRAV_DOWN;
 		currGrav = GRAVITY.DOWN; // Start with gravity pointing down.
+
+        deathCheck = GameObject.FindGameObjectWithTag("GameManager").GetComponent<ResetDeathManager>();
 	}
 
 	// Get the Joycon object; note that the JoyconManager is required.
@@ -84,6 +88,8 @@ public class PlayerMovement : MonoBehaviour {
      */
     private void Movement(MOVE tempMove)
     {
+       
+       
         if (currGrav.Equals(GRAVITY.UP) || currGrav.Equals(GRAVITY.DOWN))
         {
             if (tempMove.Equals(MOVE.LEFT))
@@ -121,11 +127,18 @@ public class PlayerMovement : MonoBehaviour {
 	 * if we want to switch gravity, then call the code to do so.
 	 */
 	void Update () {
-		if (j != null) { 
+
+        //don't move if dead
+        if (deathCheck.isDead)
+        {
+            return;
+        }
+
+        if (j != null) { 
 			accel = j.GetAccel(); 
 			GravityCheck();
 		}
-
+        
 		// Handle keyboard inputs for switching the gravity of the player.
 		if (Input.GetKeyDown(tiltUp) && currGrav != GRAVITY.UP) { // Set Gravity to Up.
 			GravitySwitch(GRAVITY.UP);
