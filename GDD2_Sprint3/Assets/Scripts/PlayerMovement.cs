@@ -28,8 +28,11 @@ public class PlayerMovement : MonoBehaviour {
 
     ResetDeathManager deathCheck;
 
-	// Set the initial gravity vector to point down.
-	private void Awake() {
+    //rotation speed of the character
+    float rotationSpeed;
+
+    // Set the initial gravity vector to point down.
+    private void Awake() {
 		Physics2D.gravity = GRAV_DOWN;
 		currGrav = GRAVITY.DOWN; // Start with gravity pointing down.
 
@@ -41,6 +44,7 @@ public class PlayerMovement : MonoBehaviour {
 		// Get the public Joycon object attached to the JoyconManager in scene
 		j = JoyconManager.Instance.j;
 
+        rotationSpeed = 50.0f;
         currentPos = transform.position;
     }
 
@@ -134,6 +138,7 @@ public class PlayerMovement : MonoBehaviour {
             return;
         }
 
+
         if (j != null) { 
 			accel = j.GetAccel(); 
 			GravityCheck();
@@ -142,13 +147,24 @@ public class PlayerMovement : MonoBehaviour {
 		// Handle keyboard inputs for switching the gravity of the player.
 		if (Input.GetKeyDown(tiltUp) && currGrav != GRAVITY.UP) { // Set Gravity to Up.
 			GravitySwitch(GRAVITY.UP);
-		} else if (Input.GetKeyDown(tiltDown) && currGrav != GRAVITY.DOWN) { // Set Gravity to Down.
+        } else if (Input.GetKeyDown(tiltDown) && currGrav != GRAVITY.DOWN) { // Set Gravity to Down.
 			GravitySwitch(GRAVITY.DOWN);
-		} else if (Input.GetKeyDown(tiltLeft) && currGrav != GRAVITY.LEFT) { // Set Gravity to Left.
+            //transform.Rotate(new Vector3(0, 0, 1) * rotationSpeed * Time.deltaTime, Space.World);
+        } else if (Input.GetKeyDown(tiltLeft) && currGrav != GRAVITY.LEFT) { // Set Gravity to Left.
 			GravitySwitch(GRAVITY.LEFT);
 		} else if (Input.GetKeyDown(tiltRight) && currGrav != GRAVITY.RIGHT) { // Set Gravity to Right.
 			GravitySwitch(GRAVITY.RIGHT);
 		}
+
+        //handles the rotation of the character when the y gravity is manipulated
+        if(currGrav == GRAVITY.UP && (Vector3.Distance(transform.eulerAngles, new Vector3(0.0f, 0.0f, 180.0f)) > 0.01f))
+        {
+            transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, new Vector3(0.0f, 0.0f, 180.0f), Time.deltaTime);
+        }
+        else if(currGrav == GRAVITY.DOWN && (Vector3.Distance(transform.eulerAngles, Vector3.zero) > 0.01f))
+        {
+            transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, Vector3.zero, Time.deltaTime);
+        }
 
         currentPos = transform.position;
         // Keyboard inputs for player movement
@@ -211,9 +227,5 @@ public class PlayerMovement : MonoBehaviour {
             }
 
         }
-
-
-
-
-        }
+    }
 }
