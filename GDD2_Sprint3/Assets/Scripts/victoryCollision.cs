@@ -19,7 +19,7 @@ public class victoryCollision : MonoBehaviour {
     {
         if(collide.gameObject.tag == "Player")
         {
-            if(SceneManager.GetActiveScene().buildIndex < SceneManager.GetAllScenes().Length)
+            if(SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCountInBuildSettings)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
