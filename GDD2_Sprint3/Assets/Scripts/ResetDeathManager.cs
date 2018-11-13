@@ -51,7 +51,6 @@ public class ResetDeathManager : MonoBehaviour {
         isDead = false;
         GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().isKinematic = false;
         GameObject.FindGameObjectWithTag("Player").transform.position = startPosition;
-
         foreach (var item in displayOnDeath)
         {
             item.SetActive(false);
