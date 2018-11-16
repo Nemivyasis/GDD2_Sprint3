@@ -159,11 +159,19 @@ public class PlayerMovement : MonoBehaviour {
         //handles the rotation of the character when the y gravity is manipulated
         if(currGrav == GRAVITY.UP && (Vector3.Distance(transform.eulerAngles, new Vector3(0.0f, 0.0f, 180.0f)) > 0.01f))
         {
-            transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, new Vector3(0.0f, 0.0f, 180.0f), Time.deltaTime);
+            transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, new Vector3(0.0f, 0.0f, 180.0f), Time.deltaTime * rotationSpeed);
         }
         else if(currGrav == GRAVITY.DOWN && (Vector3.Distance(transform.eulerAngles, Vector3.zero) > 0.01f))
         {
-            transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, Vector3.zero, Time.deltaTime);
+            transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, Vector3.zero, Time.deltaTime * rotationSpeed);
+        }
+        else if (currGrav == GRAVITY.RIGHT && (Vector3.Distance(transform.eulerAngles, new Vector3(0.0f, 0.0f, 90.0f)) > 0.01f))
+        {
+            transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, new Vector3(0.0f, 0.0f, 90.0f), Time.deltaTime * rotationSpeed);
+        }
+        else if (currGrav == GRAVITY.LEFT && (Vector3.Distance(transform.eulerAngles, new Vector3(0.0f, 0.0f, -90.0f)) > 0.01f))
+        {
+            transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, new Vector3(0.0f, 0.0f, -90.0f), Time.deltaTime * rotationSpeed);
         }
 
         currentPos = transform.position;
