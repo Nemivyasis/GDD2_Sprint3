@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
+    public bool rotLevel = false;
 	public KeyCode tiltUp, tiltDown, tiltLeft, tiltRight; // Keyboard controls for triggering the gravity changes.
 
 	private Joycon j;
@@ -31,8 +32,12 @@ public class PlayerMovement : MonoBehaviour {
     //rotation speed of the character
     float rotationSpeed;
 
+    private LevelRotScript levelRot;
+
     // Set the initial gravity vector to point down.
     private void Awake() {
+        levelRot = GameObject.FindGameObjectWithTag("Level").GetComponent<LevelRotScript>();
+
 		Physics2D.gravity = GRAV_DOWN;
 		currGrav = GRAVITY.DOWN; // Start with gravity pointing down.
 
@@ -69,16 +74,20 @@ public class PlayerMovement : MonoBehaviour {
 	 */
 	private void GravitySwitch(GRAVITY newGrav) {
 		if (newGrav.Equals(GRAVITY.DOWN)) {
-			Physics2D.gravity = GRAV_DOWN;
+			if(!rotLevel)
+                Physics2D.gravity = GRAV_DOWN;
 			currGrav = GRAVITY.DOWN;
 		} else if (newGrav.Equals(GRAVITY.UP)) {
-			Physics2D.gravity = GRAV_UP;
+            if (!rotLevel)
+                Physics2D.gravity = GRAV_UP;
 			currGrav = GRAVITY.UP;
 		} else if (newGrav.Equals(GRAVITY.RIGHT)) {
-			Physics2D.gravity = GRAV_RIGHT;
+            if (!rotLevel)
+                Physics2D.gravity = GRAV_RIGHT;
 			currGrav = GRAVITY.RIGHT;
 		} else if (newGrav.Equals(GRAVITY.LEFT)) {
-			Physics2D.gravity = GRAV_LEFT;
+            if (!rotLevel)
+                Physics2D.gravity = GRAV_LEFT;
 			currGrav = GRAVITY.LEFT;
 		}
 		// Rumble the controller for feedback.
@@ -92,9 +101,42 @@ public class PlayerMovement : MonoBehaviour {
      */
     private void Movement(MOVE tempMove)
     {
-       
-       
-        if (currGrav.Equals(GRAVITY.UP) || currGrav.Equals(GRAVITY.DOWN))
+
+        if (!rotLevel)
+        {
+
+            if (currGrav.Equals(GRAVITY.UP) || currGrav.Equals(GRAVITY.DOWN))
+            {
+                if (tempMove.Equals(MOVE.LEFT))
+                {
+                    currentPos.x += -0.05f;
+                    currentMovement = MOVE.LEFT;
+                    transform.position = currentPos;
+                }
+                else if (tempMove.Equals(MOVE.RIGHT))
+                {
+                    currentPos.x += 0.05f;
+                    currentMovement = MOVE.RIGHT;
+                    transform.position = currentPos;
+                }
+            }
+            else if (currGrav.Equals(GRAVITY.LEFT) || currGrav.Equals(GRAVITY.RIGHT))
+            {
+                if (tempMove.Equals(MOVE.LEFT))
+                {
+                    currentPos.y += -0.05f;
+                    currentMovement = MOVE.LEFT;
+                    transform.position = currentPos;
+                }
+                else if (tempMove.Equals(MOVE.RIGHT))
+                {
+                    currentPos.y += 0.05f;
+                    currentMovement = MOVE.RIGHT;
+                    transform.position = currentPos;
+                }
+            }
+        }
+        else
         {
             if (tempMove.Equals(MOVE.LEFT))
             {
@@ -105,21 +147,6 @@ public class PlayerMovement : MonoBehaviour {
             else if (tempMove.Equals(MOVE.RIGHT))
             {
                 currentPos.x += 0.05f;
-                currentMovement = MOVE.RIGHT;
-                transform.position = currentPos;
-            }
-        }
-        else if (currGrav.Equals(GRAVITY.LEFT) || currGrav.Equals(GRAVITY.RIGHT))
-        {
-            if (tempMove.Equals(MOVE.LEFT))
-            {
-                currentPos.y += -0.05f;
-                currentMovement = MOVE.LEFT;
-                transform.position = currentPos;
-            }
-            else if (tempMove.Equals(MOVE.RIGHT))
-            {
-                currentPos.y += 0.05f;
                 currentMovement = MOVE.RIGHT;
                 transform.position = currentPos;
             }
@@ -156,24 +183,31 @@ public class PlayerMovement : MonoBehaviour {
 			GravitySwitch(GRAVITY.RIGHT);
 		}
 
-        //handles the rotation of the character when the y gravity is manipulated
-        if(currGrav == GRAVITY.UP && (Vector3.Distance(transform.eulerAngles, new Vector3(0.0f, 0.0f, 180.0f)) > 0.01f))
+        if (!rotLevel)
         {
-            transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, new Vector3(0.0f, 0.0f, 180.0f), Time.deltaTime * rotationSpeed);
+            //handles the rotation of the character when the y gravity is manipulated
+            if (currGrav == GRAVITY.UP && (Vector3.Distance(transform.eulerAngles, new Vector3(0.0f, 0.0f, 180.0f)) > 0.01f))
+            {
+                transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, new Vector3(0.0f, 0.0f, 180.0f), Time.deltaTime * rotationSpeed);
+            }
+            else if (currGrav == GRAVITY.DOWN && (Vector3.Distance(transform.eulerAngles, Vector3.zero) > 0.01f))
+            {
+                transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, Vector3.zero, Time.deltaTime * rotationSpeed);
+            }
+            else if (currGrav == GRAVITY.RIGHT && (Vector3.Distance(transform.eulerAngles, new Vector3(0.0f, 0.0f, 90.0f)) > 0.01f))
+            {
+                transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, new Vector3(0.0f, 0.0f, 90.0f), Time.deltaTime * rotationSpeed);
+            }
+            else if (currGrav == GRAVITY.LEFT && (Vector3.Distance(transform.eulerAngles, new Vector3(0.0f, 0.0f, -90.0f)) > 0.01f))
+            {
+                transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, new Vector3(0.0f, 0.0f, -90.0f), Time.deltaTime * rotationSpeed);
+            }
         }
-        else if(currGrav == GRAVITY.DOWN && (Vector3.Distance(transform.eulerAngles, Vector3.zero) > 0.01f))
+        else
         {
-            transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, Vector3.zero, Time.deltaTime * rotationSpeed);
+            levelRot.Rotate((int)currGrav);
         }
-        else if (currGrav == GRAVITY.RIGHT && (Vector3.Distance(transform.eulerAngles, new Vector3(0.0f, 0.0f, 90.0f)) > 0.01f))
-        {
-            transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, new Vector3(0.0f, 0.0f, 90.0f), Time.deltaTime * rotationSpeed);
-        }
-        else if (currGrav == GRAVITY.LEFT && (Vector3.Distance(transform.eulerAngles, new Vector3(0.0f, 0.0f, -90.0f)) > 0.01f))
-        {
-            transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, new Vector3(0.0f, 0.0f, -90.0f), Time.deltaTime * rotationSpeed);
-        }
-
+        
         currentPos = transform.position;
         // Keyboard inputs for player movement
         if (Input.GetKey(KeyCode.A))
@@ -184,6 +218,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             Movement(MOVE.RIGHT);
         }
+
 
         // switch stick controls
         if (j != null)
