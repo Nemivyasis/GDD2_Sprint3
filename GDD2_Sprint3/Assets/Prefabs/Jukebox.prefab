@@ -52,7 +52,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speaker: {fileID: 1556707023465396, guid: d2fdb84090f2adf45aaa464560c595b2, type: 2}
-  audioLayers:
-  - {fileID: 8300000, guid: f4b429eab5ec82044a3f349b164c2ec1, type: 3}
+  audioLayersIntros:
+  - {fileID: 8300000, guid: d95da7aa655459b4790bceee5b5afe17, type: 3}
+  audioLayersLoops:
+  - {fileID: 8300000, guid: 7135015434ac76545baa166b9169ed18, type: 3}
   audioSrcs: []
   victoryClip: {fileID: 8300000, guid: fe9c398442ad66946a53b27bf73bd105, type: 3}

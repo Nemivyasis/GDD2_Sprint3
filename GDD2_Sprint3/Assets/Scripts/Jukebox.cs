@@ -12,12 +12,28 @@ public class Jukebox : MonoBehaviour {
 
 	public GameObject speaker; // The "speaker" object is just a blank prefab with an AudioSource.
 
-	public AudioClip[] audioLayers; // Populate the list of audio layers with audio clips in the order that you want them to be introduced. E.G, the first clip goes first.
+	// public AudioClip[] audioLayers; // Populate the list of audio layers with audio clips in the order that you want them to be introduced. E.G, the first clip goes first.
+	public AudioClip[] audioLayersIntros; // 
+	public AudioClip[] audioLayersLoops; // 
 	public List<AudioSource> audioSrcs; 
 	public AudioClip victoryClip; // Our victory music.
 
 	private const float EPSILON = 0.05f;
 	private const int ONE_SEC = 60;
+
+	public void Update() {
+		if (Input.GetKeyDown(KeyCode.Alpha1)) {
+			AddSpeaker(1);
+		} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+			AddSpeaker(2);
+		} else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+			AddSpeaker(3);
+		} else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+			AddSpeaker(4);
+		} else if (Input.GetKeyDown(KeyCode.Alpha5)) {
+			AddSpeaker(5);
+		}
+	}
 
 	/** Fade out the audio on all of our speakers.
 	 * Loop through all speakers and call "subspeaker" on them, which'll
@@ -65,9 +81,9 @@ public class Jukebox : MonoBehaviour {
 			instance = this;
 		}
 		// Create as many audio sources as children as there are audio layers.
-		for (int i = 0; i < audioLayers.Length; i++) {
+		for (int i = 0; i < audioLayersIntros.Length; i++) {
 			GameObject result = (GameObject) Instantiate(speaker, transform.position, Quaternion.identity);
-			result.GetComponent<AudioSource>().clip = audioLayers[i]; // Set its audio clip
+			result.GetComponent<AudioSource>().clip = audioLayersIntros[i]; // Set its audio clip.
 			result.GetComponent<AudioSource>().volume = 0f; // Set its volume to zero.
 			audioSrcs.Add(result.GetComponent<AudioSource>());
 		}
@@ -96,13 +112,29 @@ public class Jukebox : MonoBehaviour {
 	 * Everything is based on the length of the first one, however.
 	 */
 	private IEnumerator LoopSongVR () {
+		// Play the introductions
+		for (int i = 0; i < audioLayersIntros.Length; i++) {
+			audioSrcs[i].Play();
+		}
+		// Wait until the first speaker is done with their audio clip before looping.
+		yield return StartCoroutine(WaitForRealSeconds(audioLayersIntros[0].length));
+		while (audioSrcs[0].isPlaying) {
+			yield return new WaitForEndOfFrame();
+		}
+
+		// Now, swap all audio files with the looped versions before proceeding.
+		for (int i = 0; i < audioLayersLoops.Length; i++) {
+			audioSrcs[i].clip = audioLayersLoops[i];
+		}
+
+		// Play the looped portion of each track.
 		while (true) {
 			// Play all layers of audio
-			for (int i = 0; i < audioLayers.Length; i++) {
+			for (int i = 0; i < audioLayersLoops.Length; i++) {
 				audioSrcs[i].Play();
 			}
 			// Wait until the first speaker is done with their audio clip before looping.
-			yield return StartCoroutine(WaitForRealSeconds(audioLayers[0].length));
+			yield return StartCoroutine(WaitForRealSeconds(audioLayersLoops[0].length));
 			while (audioSrcs[0].isPlaying) {
 				yield return new WaitForEndOfFrame();
 			}
@@ -117,7 +149,7 @@ public class Jukebox : MonoBehaviour {
 		float timer = 0;
 		AudioSource currSpeaker = audioSrcs[speakerIndex];
 		for (int i = 0; i < ONE_SEC; i++) {
-			currSpeaker.volume = Mathf.Lerp(0, (1f / audioLayers.Length), timer);
+			currSpeaker.volume = Mathf.Lerp(0, (1f / audioLayersIntros.Length), timer);
 			timer += Time.fixedDeltaTime;
 			yield return new WaitForSeconds(Time.fixedDeltaTime);
 		}
@@ -131,7 +163,7 @@ public class Jukebox : MonoBehaviour {
 		float timer = 0;
 		AudioSource currSpeaker = audioSrcs[speakerIndex];
 		for (int i = 0; i < ONE_SEC; i++) {
-			currSpeaker.volume = Mathf.Lerp((1f / audioLayers.Length), 0, timer);
+			currSpeaker.volume = Mathf.Lerp((1f / audioLayersIntros.Length), 0, timer);
 			timer += Time.fixedDeltaTime;
 			yield return new WaitForSeconds(Time.fixedDeltaTime);
 		}

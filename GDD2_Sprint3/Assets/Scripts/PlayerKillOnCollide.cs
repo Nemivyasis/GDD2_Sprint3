@@ -20,6 +20,7 @@ public class PlayerKillOnCollide : MonoBehaviour {
     {
         if(other.gameObject.tag == "Player")
         {
+			Jukebox.instance.Victory();
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<ResetDeathManager>().KillPlayer(other.gameObject);
         }
     }
