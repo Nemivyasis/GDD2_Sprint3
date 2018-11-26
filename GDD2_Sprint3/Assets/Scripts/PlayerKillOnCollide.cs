@@ -20,7 +20,7 @@ public class PlayerKillOnCollide : MonoBehaviour {
     {
         if(other.gameObject.tag == "Player")
         {
-			Jukebox.instance.Victory();
+			// Jukebox.instance.Victory(); //Uncomment if you want Guile's theme to play upon death... and afterwards.
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<ResetDeathManager>().KillPlayer(other.gameObject);
         }
     }

@@ -58,6 +58,9 @@ public class PlayerMovement : MonoBehaviour {
 	 * PRECONDITION: There must be a Joycon present to call this code.
 	 */
 	private void GravityCheck() {
+		if (!j.GetButton(Joycon.Button.SHOULDER_2)) {
+			return;
+		}
 		if (currGrav != GRAVITY.DOWN && accel.y + (Mathf.Abs(accel.z)) >= 1.0f) { // Our controller is upright. Gravity points down.
 			GravitySwitch(GRAVITY.DOWN);
 		} else if (currGrav != GRAVITY.UP && accel.y + (-Mathf.Abs(accel.z)) <= -1.0f) { // Our controller is upside-down. Gravity points up.
