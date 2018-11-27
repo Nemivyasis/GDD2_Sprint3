@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviour {
     public Vector3 currentPos;
     float[] jStick; // store the value of joycon stick position
 
+	public AudioClip gravSFX, hitFloorSFX;
+	private AudioSource audi; // For playing all of our sound effects.
+
     ResetDeathManager deathCheck;
 
     //rotation speed of the character
@@ -42,6 +45,7 @@ public class PlayerMovement : MonoBehaviour {
 		currGrav = GRAVITY.DOWN; // Start with gravity pointing down.
 
         deathCheck = GameObject.FindGameObjectWithTag("GameManager").GetComponent<ResetDeathManager>();
+		audi = GetComponent<AudioSource>();
 	}
 
 	// Get the Joycon object; note that the JoyconManager is required.
@@ -93,6 +97,8 @@ public class PlayerMovement : MonoBehaviour {
                 Physics2D.gravity = GRAV_LEFT;
 			currGrav = GRAVITY.LEFT;
 		}
+		// Play a sound effect for feedback.
+		audi.PlayOneShot(gravSFX);
 		// Rumble the controller for feedback.
 		if (j != null) {
 			//j.SetRumble (160, 320, 0.6f, 200);
@@ -274,4 +280,12 @@ public class PlayerMovement : MonoBehaviour {
 
         }
     }
+
+	// Code to play the sound for hitting the floor.
+	private void OnCollisionEnter2D(Collision2D coll) {
+		if (coll.gameObject.tag.Equals("Platform")) {
+			audi.PlayOneShot(hitFloorSFX);
+		}
+	}
+
 }

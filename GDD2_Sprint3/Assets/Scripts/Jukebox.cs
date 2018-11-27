@@ -12,6 +12,8 @@ public class Jukebox : MonoBehaviour {
 
 	public GameObject speaker; // The "speaker" object is just a blank prefab with an AudioSource.
 
+	public AudioClip damagedSFX, koSFX;
+
 	// public AudioClip[] audioLayers; // Populate the list of audio layers with audio clips in the order that you want them to be introduced. E.G, the first clip goes first.
 	public AudioClip[] audioLayersIntros; // 
 	public AudioClip[] audioLayersLoops; // 
@@ -30,8 +32,6 @@ public class Jukebox : MonoBehaviour {
 			AddSpeaker(3);
 		} else if (Input.GetKeyDown(KeyCode.Alpha4)) {
 			AddSpeaker(4);
-		} else if (Input.GetKeyDown(KeyCode.Alpha5)) {
-			AddSpeaker(5);
 		}
 	}
 
@@ -72,6 +72,16 @@ public class Jukebox : MonoBehaviour {
 		StartCoroutine(VRFade(speakerIndex));
 	}
 
+	// Play the Damaged SFX.
+	public void DamagedSFX() {
+		audioSrcs[0].PlayOneShot(damagedSFX);
+	}
+
+	// Play the KO'd SFX.
+	public void KOSFX() {
+		audioSrcs[0].PlayOneShot(koSFX);
+	}
+
 	/** Upon awake, make sure that for every audio layer in our music piece, we have
 	 * one "speaker" for each.
 	 * Also sets up the singleton object.
@@ -84,7 +94,8 @@ public class Jukebox : MonoBehaviour {
 		for (int i = 0; i < audioLayersIntros.Length; i++) {
 			GameObject result = (GameObject) Instantiate(speaker, transform.position, Quaternion.identity);
 			result.GetComponent<AudioSource>().clip = audioLayersIntros[i]; // Set its audio clip.
-			result.GetComponent<AudioSource>().volume = 0f; // Set its volume to zero.
+			Debug.Log("Jukebox.Awake() -- nonzero value");
+			result.GetComponent<AudioSource>().volume = 0.20f; // Set its volume to zero.
 			audioSrcs.Add(result.GetComponent<AudioSource>());
 		}
 		AddSpeaker(0);
@@ -94,7 +105,7 @@ public class Jukebox : MonoBehaviour {
 	public void Start() {
 		StartCoroutine("LoopSongVR");		
 	}
-		
+
 
 	/** Wait in the frozen time, if we're ever modifying the time scale.
 	* Probably stolen from some tutorial on the internet.

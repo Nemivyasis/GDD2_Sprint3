@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1444530553598580}
+  m_IsPrefabAsset: 1
+--- !u!1 &1444530553598580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4054563495304160}
+  - component: {fileID: 114119641350532274}
+  m_Layer: 0
+  m_Name: JKBX A
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4054563495304160
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1444530553598580}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114119641350532274
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1444530553598580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9614e9306a865ba46afebd0c8cdec006, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speaker: {fileID: 1556707023465396, guid: d2fdb84090f2adf45aaa464560c595b2, type: 2}
+  audioLayersIntros:
+  - {fileID: 8300000, guid: 8e38fff9b79322a4792bca5bd4a07edd, type: 3}
+  - {fileID: 8300000, guid: 36d8b859574e0e640ac59978f9b9d832, type: 3}
+  - {fileID: 8300000, guid: 7fcb072e0629dbd4fa5e2f03deaa77e2, type: 3}
+  - {fileID: 8300000, guid: f98a1908a81daa34688bb45b54b5c3e2, type: 3}
+  - {fileID: 8300000, guid: a975888b1ed751f4b889478604cb0fe4, type: 3}
+  audioLayersLoops:
+  - {fileID: 8300000, guid: cdab69a2d4cd16a41a9c8a96ce1975ee, type: 3}
+  - {fileID: 8300000, guid: b9f29b7c65048534f9eaf1bb3abed07a, type: 3}
+  - {fileID: 8300000, guid: 5f14d20a0a4f24746879b4ac61068388, type: 3}
+  - {fileID: 8300000, guid: eb3ebc58291cd914390de18468670c2b, type: 3}
+  - {fileID: 8300000, guid: 3e758d4fffbf5cd4dad8cdee9088888e, type: 3}
+  audioSrcs: []
+  victoryClip: {fileID: 8300000, guid: fe9c398442ad66946a53b27bf73bd105, type: 3}
