@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour {
 		// Get the public Joycon object attached to the JoyconManager in scene
 		j = JoyconManager.Instance.j;
 
-        rotationSpeed = 50.0f;
+        rotationSpeed = 100.0f;
         currentPos = transform.position;
     }
 
