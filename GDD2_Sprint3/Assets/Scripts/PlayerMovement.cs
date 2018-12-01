@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour {
 	 * PRECONDITION: There must be a Joycon present to call this code.
 	 */
 	private void GravityCheck() {
-		if (!j.GetButton(Joycon.Button.SHOULDER_2)) {
+		if (!(j.GetButton(Joycon.Button.SL) || j.GetButton(Joycon.Button.SR))) {
 			return;
 		}
 		if (currGrav != GRAVITY.DOWN && accel.y + (Mathf.Abs(accel.z)) >= 1.0f) { // Our controller is upright. Gravity points down.

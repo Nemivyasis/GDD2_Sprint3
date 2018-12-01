@@ -52,7 +52,7 @@ public class Jukebox : MonoBehaviour {
 	 */
 	public void Victory() {
 		audioSrcs[0].clip = victoryClip;
-		audioSrcs[0].volume = 1f;
+		audioSrcs[0].volume = 0f;
 		audioSrcs[0].Play();
 	}
 
