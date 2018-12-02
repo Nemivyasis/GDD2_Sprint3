@@ -19,7 +19,7 @@ public class PlayerKillOnCollide : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		if(other.gameObject.tag == "Player")
+		if(other.gameObject.tag == "Player" && !GameObject.FindObjectOfType<ResetDeathManager>().isDead)
 		{
 			PlayerPrefs.SetInt("lives", PlayerPrefs.GetInt("lives") - 1); // Reduce number of lives.
 			LifeCounter.instance.UpdateText();

@@ -1609,13 +1609,14 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 300
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press R on the keyboard or R or L on the Joycon to reset.
+  m_Text: If you have lives remaining, press R on the keyboard or R or L on the Joycon
+    to reset.
 --- !u!222 &769209789
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3389,7 +3390,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: WASTED
+  m_Text: DAMAGED
 --- !u!222 &1672910402
 CanvasRenderer:
   m_ObjectHideFlags: 0
