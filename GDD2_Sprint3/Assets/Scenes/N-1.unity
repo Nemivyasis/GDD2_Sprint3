@@ -1096,6 +1096,10 @@ Prefab:
       propertyPath: m_Name
       value: Checkpoint (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1883536951282516, guid: 17ea6d52585469943bb7b7266774bd6a, type: 2}
+      propertyPath: m_TagString
+      value: Checkpoint2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17ea6d52585469943bb7b7266774bd6a, type: 2}
   m_IsPrefabAsset: 0
@@ -4052,6 +4056,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
+  checkpointNum: 0
+  checkpointCounter: 0
   displayOnDeath:
   - {fileID: 1672910399}
   - {fileID: 769209786}

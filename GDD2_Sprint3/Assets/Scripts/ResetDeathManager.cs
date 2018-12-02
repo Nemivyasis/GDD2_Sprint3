@@ -9,11 +9,17 @@ public class ResetDeathManager : MonoBehaviour {
 
     private Vector3 startPosition;
 
+    public int checkpointNum;
+    public int checkpointCounter; // indicates what checkpoint to check for *next*
+
     public GameObject[] displayOnDeath;
     // Use this for initialization
     void Start () {
         joy = JoyconManager.Instance.j;
         startPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+
+        checkpointNum = GameObject.FindGameObjectsWithTag("Checkpoint").Length;
+        checkpointCounter = 1;
     }
 	
 	// Update is called once per frame
@@ -61,15 +67,47 @@ public class ResetDeathManager : MonoBehaviour {
 
     private void Checkpoint()
     {
-        if (GameObject.FindGameObjectWithTag("Player").transform.position.x <= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.x &&
-            GameObject.FindGameObjectWithTag("Player").transform.position.x >= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.x - 1)
+        if (checkpointCounter == 1)
         {
-            if (GameObject.FindGameObjectWithTag("Player").transform.position.y <= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.y &&
-            GameObject.FindGameObjectWithTag("Player").transform.position.y >= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.y - 1)
+            if (GameObject.FindGameObjectWithTag("Player").transform.position.x <= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.x &&
+            GameObject.FindGameObjectWithTag("Player").transform.position.x >= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.x - 1)
             {
-                GameObject.FindGameObjectWithTag("Checkpoint").GetComponent<SpriteRenderer>().color = new Color(155f, 255f, 155f);
-                startPosition = GameObject.FindGameObjectWithTag("Checkpoint").transform.position;
+                if (GameObject.FindGameObjectWithTag("Player").transform.position.y <= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.y &&
+                GameObject.FindGameObjectWithTag("Player").transform.position.y >= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.y - 1)
+                {
+                    GameObject.FindGameObjectWithTag("Checkpoint").GetComponent<SpriteRenderer>().color = new Color(155f, 255f, 155f);
+                    startPosition = GameObject.FindGameObjectWithTag("Checkpoint").transform.position;
+                    checkpointCounter++;
+                }
             }
         }
+        else if (checkpointCounter > 1)
+        {
+            /* Currently crashing Unity, need to find a working syntax for ("Checkpoint" + checkpointCounter)
+            if (GameObject.FindGameObjectWithTag("Player").transform.position.x <= GameObject.FindGameObjectWithTag("Checkpoint" + checkpointCounter).transform.position.x &&
+            GameObject.FindGameObjectWithTag("Player").transform.position.x >= GameObject.FindGameObjectWithTag("Checkpoint" + checkpointCounter).transform.position.x - 1)
+            {
+                if (GameObject.FindGameObjectWithTag("Player").transform.position.y <= GameObject.FindGameObjectWithTag("Checkpoint" + checkpointCounter).transform.position.y &&
+                GameObject.FindGameObjectWithTag("Player").transform.position.y >= GameObject.FindGameObjectWithTag("Checkpoint" + checkpointCounter).transform.position.y - 1)
+                {
+                    GameObject.FindGameObjectWithTag("Checkpoint").GetComponent<SpriteRenderer>().color = new Color(155f, 255f, 155f);
+                    startPosition = GameObject.FindGameObjectWithTag("Checkpoint").transform.position;
+                    checkpointCounter++;
+                }
+            }
+            */
+            if (GameObject.FindGameObjectWithTag("Player").transform.position.x <= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.x &&
+            GameObject.FindGameObjectWithTag("Player").transform.position.x >= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.x - 1)
+            {
+                if (GameObject.FindGameObjectWithTag("Player").transform.position.y <= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.y &&
+                GameObject.FindGameObjectWithTag("Player").transform.position.y >= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.y - 1)
+                {
+                    GameObject.FindGameObjectWithTag("Checkpoint").GetComponent<SpriteRenderer>().color = new Color(155f, 255f, 155f);
+                    startPosition = GameObject.FindGameObjectWithTag("Checkpoint").transform.position;
+                    //checkpointCounter++; // Incrementing infinitely when in the checkpoint
+                }
+            }
+        }
+        
     }
 }
