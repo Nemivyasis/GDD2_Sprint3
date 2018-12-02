@@ -10,6 +10,7 @@ public class SceneButton : MonoBehaviour {
 
 	public void ChangeScene(string sceneName) {
 		PlayerPrefs.SetInt("lives", 5); // So, every time we load up a new scene, set the player's number of lives to 5.
+		LifeCounter.instance.UpdateText();
 		SceneManager.LoadScene(sceneName);
 	}
 }
