@@ -18,6 +18,8 @@ public class ResetDeathManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        Checkpoint();
+
         if (isDead)
         {
             if (joy != null)
@@ -54,6 +56,20 @@ public class ResetDeathManager : MonoBehaviour {
         foreach (var item in displayOnDeath)
         {
             item.SetActive(false);
+        }
+    }
+
+    private void Checkpoint()
+    {
+        if (GameObject.FindGameObjectWithTag("Player").transform.position.x <= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.x &&
+            GameObject.FindGameObjectWithTag("Player").transform.position.x >= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.x - 1)
+        {
+            if (GameObject.FindGameObjectWithTag("Player").transform.position.y <= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.y &&
+            GameObject.FindGameObjectWithTag("Player").transform.position.y >= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.y - 1)
+            {
+                GameObject.FindGameObjectWithTag("Checkpoint").GetComponent<SpriteRenderer>().color = new Color(155f, 255f, 155f);
+                startPosition = GameObject.FindGameObjectWithTag("Checkpoint").transform.position;
+            }
         }
     }
 }

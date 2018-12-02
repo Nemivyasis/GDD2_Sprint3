@@ -9,6 +9,7 @@ TagManager:
   - Canvas
   - Level
   - Platform
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
