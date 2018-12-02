@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class Jukebox : MonoBehaviour {
 
 	public static Jukebox instance; // Singleton Object.
+	public float MAX_VOLUME = 1; // Maximum volume
 
 	public GameObject speaker; // The "speaker" object is just a blank prefab with an AudioSource.
 
@@ -26,12 +27,6 @@ public class Jukebox : MonoBehaviour {
 	public void Update() {
 		if (Input.GetKeyDown(KeyCode.Alpha1)) {
 			AddSpeaker(1);
-		} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
-			AddSpeaker(2);
-		} else if (Input.GetKeyDown(KeyCode.Alpha3)) {
-			AddSpeaker(3);
-		} else if (Input.GetKeyDown(KeyCode.Alpha4)) {
-			AddSpeaker(4);
 		}
 	}
 
@@ -74,12 +69,22 @@ public class Jukebox : MonoBehaviour {
 
 	// Play the Damaged SFX.
 	public void DamagedSFX() {
-		audioSrcs[0].PlayOneShot(damagedSFX);
+		for (int i = 0; i < audioSrcs.Count; i++) {
+			if (audioSrcs[i] != null) {
+				audioSrcs[i].PlayOneShot(damagedSFX);
+				return;
+			}
+		}
 	}
 
 	// Play the KO'd SFX.
 	public void KOSFX() {
-		audioSrcs[0].PlayOneShot(koSFX);
+		for (int i = 0; i < audioSrcs.Count; i++) {
+			if (audioSrcs[i] != null) {
+				audioSrcs[i].PlayOneShot(koSFX);
+				return;
+			}
+		}
 	}
 
 	/** Upon awake, make sure that for every audio layer in our music piece, we have
@@ -95,10 +100,11 @@ public class Jukebox : MonoBehaviour {
 			GameObject result = (GameObject) Instantiate(speaker, transform.position, Quaternion.identity);
 			result.GetComponent<AudioSource>().clip = audioLayersIntros[i]; // Set its audio clip.
 			Debug.Log("Jukebox.Awake() -- nonzero value");
-			result.GetComponent<AudioSource>().volume = 0.20f; // Set its volume to zero.
+			result.GetComponent<AudioSource>().volume = MAX_VOLUME / audioLayersIntros.Length; // Set its volume to "base."
 			audioSrcs.Add(result.GetComponent<AudioSource>());
 		}
 		AddSpeaker(0);
+		DontDestroyOnLoad(this.gameObject);
 	}
 
 	// Start up the audio loop for the vertical remix.
@@ -160,7 +166,7 @@ public class Jukebox : MonoBehaviour {
 		float timer = 0;
 		AudioSource currSpeaker = audioSrcs[speakerIndex];
 		for (int i = 0; i < ONE_SEC; i++) {
-			currSpeaker.volume = Mathf.Lerp(0, (1f / audioLayersIntros.Length), timer);
+			currSpeaker.volume = Mathf.Lerp(0, (MAX_VOLUME / audioLayersIntros.Length) * 2, timer);
 			timer += Time.fixedDeltaTime;
 			yield return new WaitForSeconds(Time.fixedDeltaTime);
 		}
@@ -174,10 +180,22 @@ public class Jukebox : MonoBehaviour {
 		float timer = 0;
 		AudioSource currSpeaker = audioSrcs[speakerIndex];
 		for (int i = 0; i < ONE_SEC; i++) {
-			currSpeaker.volume = Mathf.Lerp((1f / audioLayersIntros.Length), 0, timer);
+			currSpeaker.volume = Mathf.Lerp((MAX_VOLUME / audioLayersIntros.Length) * 2, 0, timer);
 			timer += Time.fixedDeltaTime;
 			yield return new WaitForSeconds(Time.fixedDeltaTime);
 		}
+	}
+
+	// Delete this instance of the jukebox.
+	public void DeleteJukebox() {
+		instance = null;
+		for (int i = 0; i < audioSrcs.Count; i++) {
+			if (audioSrcs[i] != null) {
+				audioSrcs[i].Stop();
+				Destroy(audioSrcs[i]);
+			}
+		}
+		Destroy(this.gameObject);
 	}
 }
 

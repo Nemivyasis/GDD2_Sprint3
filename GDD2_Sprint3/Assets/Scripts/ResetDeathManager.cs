@@ -56,6 +56,9 @@ public class ResetDeathManager : MonoBehaviour {
 
     private void Reset()
     {
+		if (PlayerPrefs.GetInt("lives") <= 0) {
+			return;
+		}
         isDead = false;
         GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().isKinematic = false;
         GameObject.FindGameObjectWithTag("Player").transform.position = startPosition;
@@ -67,7 +70,7 @@ public class ResetDeathManager : MonoBehaviour {
 
     private void Checkpoint()
     {
-        if (checkpointCounter == 1)
+		if (checkpointCounter == 1 && GameObject.FindGameObjectWithTag("Checkpoint") != null)
         {
             if (GameObject.FindGameObjectWithTag("Player").transform.position.x <= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.x &&
             GameObject.FindGameObjectWithTag("Player").transform.position.x >= GameObject.FindGameObjectWithTag("Checkpoint").transform.position.x - 1)
@@ -81,7 +84,7 @@ public class ResetDeathManager : MonoBehaviour {
                 }
             }
         }
-        else if (checkpointCounter > 1)
+		else if (checkpointCounter > 1 && GameObject.FindGameObjectWithTag("Checkpoint") != null)
         {
             /* Currently crashing Unity, need to find a working syntax for ("Checkpoint" + checkpointCounter)
             if (GameObject.FindGameObjectWithTag("Player").transform.position.x <= GameObject.FindGameObjectWithTag("Checkpoint" + checkpointCounter).transform.position.x &&

@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1116794131766614}
+  m_IsPrefabAsset: 1
+--- !u!1 &1116794131766614
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4163951799856722}
+  - component: {fileID: 114311258798006348}
+  m_Layer: 0
+  m_Name: JKBX B
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4163951799856722
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1116794131766614}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114311258798006348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1116794131766614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9614e9306a865ba46afebd0c8cdec006, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MAX_VOLUME: 0.5
+  speaker: {fileID: 1556707023465396, guid: d2fdb84090f2adf45aaa464560c595b2, type: 2}
+  damagedSFX: {fileID: 8300000, guid: c1b1b3c129b70634db918325bf5dbf72, type: 3}
+  koSFX: {fileID: 8300000, guid: e82b1004987ecab44a25339a43219bb6, type: 3}
+  audioLayersIntros:
+  - {fileID: 8300000, guid: 654bd4a92ce1d29468f75c5c259a1f28, type: 3}
+  - {fileID: 8300000, guid: 3b29c8dae8fd29d4fba1b3db280ea6b3, type: 3}
+  - {fileID: 8300000, guid: 43f8d93d55654c747b9d95f0975177f3, type: 3}
+  - {fileID: 8300000, guid: 4832a900921aebd4e8e398cd6c375663, type: 3}
+  - {fileID: 8300000, guid: fd6ef30149cfc9242aee8b844950c9bf, type: 3}
+  - {fileID: 8300000, guid: cba6eb217daad5443b0dc8bae0d956a5, type: 3}
+  audioLayersLoops:
+  - {fileID: 8300000, guid: 654bd4a92ce1d29468f75c5c259a1f28, type: 3}
+  - {fileID: 8300000, guid: 3b29c8dae8fd29d4fba1b3db280ea6b3, type: 3}
+  - {fileID: 8300000, guid: 43f8d93d55654c747b9d95f0975177f3, type: 3}
+  - {fileID: 8300000, guid: 4832a900921aebd4e8e398cd6c375663, type: 3}
+  - {fileID: 8300000, guid: fd6ef30149cfc9242aee8b844950c9bf, type: 3}
+  - {fileID: 8300000, guid: cba6eb217daad5443b0dc8bae0d956a5, type: 3}
+  audioSrcs: []
+  victoryClip: {fileID: 8300000, guid: fe9c398442ad66946a53b27bf73bd105, type: 3}

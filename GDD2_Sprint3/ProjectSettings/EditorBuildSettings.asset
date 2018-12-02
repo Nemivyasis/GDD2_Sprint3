@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/JoyconLib/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/Title Screen.unity
+    guid: efe20c96f01df674288a866e6020d6db
+  - enabled: 1
+    path: Assets/Scenes/How To Play.unity
+    guid: 9d43471e2e04b3c4bb0fbfe701b4fcec
+  - enabled: 1
     path: Assets/Scenes/Demo.unity
     guid: 073580325d9669b4fba2c9f68a56a714
   - enabled: 1
@@ -20,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/N-1.unity
     guid: 7a47f3443212cdf46bb3c456e2a10127
+  - enabled: 1
+    path: Assets/Scenes/Ending.unity
+    guid: aea95665182a7ce4d8131d4087da9db0
   m_configObjects: {}

@@ -51,7 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9614e9306a865ba46afebd0c8cdec006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MAX_VOLUME: 0.5
   speaker: {fileID: 1556707023465396, guid: d2fdb84090f2adf45aaa464560c595b2, type: 2}
+  damagedSFX: {fileID: 8300000, guid: c1b1b3c129b70634db918325bf5dbf72, type: 3}
+  koSFX: {fileID: 8300000, guid: e82b1004987ecab44a25339a43219bb6, type: 3}
   audioLayersIntros:
   - {fileID: 8300000, guid: 8e38fff9b79322a4792bca5bd4a07edd, type: 3}
   - {fileID: 8300000, guid: 36d8b859574e0e640ac59978f9b9d832, type: 3}
