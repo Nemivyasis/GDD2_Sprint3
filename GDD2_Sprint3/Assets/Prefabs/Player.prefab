@@ -81,7 +81,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.125, y: 3.3125}
+    oldSize: {x: 0.53125, y: 0.828125}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -220,6 +220,7 @@ MonoBehaviour:
   tiltLeft: 106
   tiltRight: 108
   currentPos: {x: 0, y: 0, z: 0}
+  maxFallSpeed: 5
   gravSFX: {fileID: 8300000, guid: ebfa95f75d4bf1c4c8f800b01332971f, type: 3}
   hitFloorSFX: {fileID: 8300000, guid: e19760831f2ab7646921cbaea201d8c0, type: 3}
 --- !u!212 &212690189687357552

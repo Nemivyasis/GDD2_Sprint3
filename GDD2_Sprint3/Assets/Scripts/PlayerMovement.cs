@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour {
     public Vector3 currentPos;
     float[] jStick; // store the value of joycon stick position
 
+    public float maxFallSpeed;
+
 	public AudioClip gravSFX, hitFloorSFX;
 	private AudioSource audi; // For playing all of our sound effects.
 
@@ -39,8 +41,11 @@ public class PlayerMovement : MonoBehaviour {
 
     private LevelRotScript levelRot;
 
+    private Rigidbody2D rb;
+
     // Set the initial gravity vector to point down.
     private void Awake() {
+        rb = gameObject.GetComponent<Rigidbody2D>();
         levelRot = GameObject.FindGameObjectWithTag("Level").GetComponent<LevelRotScript>();
 
 		Physics2D.gravity = GRAV_DOWN;
@@ -83,7 +88,7 @@ public class PlayerMovement : MonoBehaviour {
 	 * param[newGrav] - a GRAVITY enum for the four possible directions of gravity.
 	 */
 	private void GravitySwitch(GRAVITY newGrav) {
-        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+        
 
         if (newGrav.Equals(GRAVITY.DOWN)) {
             if (!rotLevel)
@@ -193,7 +198,11 @@ public class PlayerMovement : MonoBehaviour {
         {
             return;
         }
-
+        
+        if(rb.velocity.magnitude > maxFallSpeed)
+        {
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxFallSpeed);
+        }
 
         if (j != null) { 
 			accel = j.GetAccel(); 
