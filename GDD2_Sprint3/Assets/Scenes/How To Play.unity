@@ -875,8 +875,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "--Joycon Controls--\nControl Stick\t\t\t\t\t\t|\tLeft / Right\nSL / SR
-    + Rotate Controller\t\t|\tRotate World"
+  m_Text: "\n--Joycon Controls--\nControl Stick\t\t|\tLeft / Right\nRotate Controller\t\t|\tRotate
+    World\nSL / SR\t\t\t\t\t|\tLock Rotation"
 --- !u!222 &1642932904
 CanvasRenderer:
   m_ObjectHideFlags: 0

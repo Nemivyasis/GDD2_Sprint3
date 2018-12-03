@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5473d8adda8681a4aa150e315cfe7352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotLevel: 0
+  rotLevel: 1
   tiltUp: 105
   tiltDown: 107
   tiltLeft: 106
