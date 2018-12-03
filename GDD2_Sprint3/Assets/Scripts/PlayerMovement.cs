@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour {
 	public AudioClip gravSFX, hitFloorSFX;
 	private AudioSource audi; // For playing all of our sound effects.
 
+    private Animator anim;
+
     ResetDeathManager deathCheck;
 
     //rotation speed of the character
@@ -46,7 +48,8 @@ public class PlayerMovement : MonoBehaviour {
 
         deathCheck = GameObject.FindGameObjectWithTag("GameManager").GetComponent<ResetDeathManager>();
 		audi = GetComponent<AudioSource>();
-	}
+        anim = GetComponent<Animator>();
+    }
 
 	// Get the Joycon object; note that the JoyconManager is required.
 	private void Start() {
@@ -80,22 +83,39 @@ public class PlayerMovement : MonoBehaviour {
 	 * param[newGrav] - a GRAVITY enum for the four possible directions of gravity.
 	 */
 	private void GravitySwitch(GRAVITY newGrav) {
-		if (newGrav.Equals(GRAVITY.DOWN)) {
-			if(!rotLevel)
+        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+
+        if (newGrav.Equals(GRAVITY.DOWN)) {
+            if (!rotLevel)
+            {
                 Physics2D.gravity = GRAV_DOWN;
-			currGrav = GRAVITY.DOWN;
+                rb.velocity = new Vector2(0, -rb.velocity.magnitude);
+            }
+                currGrav = GRAVITY.DOWN;
+
 		} else if (newGrav.Equals(GRAVITY.UP)) {
             if (!rotLevel)
+            {
                 Physics2D.gravity = GRAV_UP;
-			currGrav = GRAVITY.UP;
-		} else if (newGrav.Equals(GRAVITY.RIGHT)) {
+                rb.velocity = new Vector2(0, rb.velocity.magnitude);
+            }
+            currGrav = GRAVITY.UP;
+
+        } else if (newGrav.Equals(GRAVITY.RIGHT)) {
             if (!rotLevel)
+            {
                 Physics2D.gravity = GRAV_RIGHT;
-			currGrav = GRAVITY.RIGHT;
-		} else if (newGrav.Equals(GRAVITY.LEFT)) {
+                rb.velocity = new Vector2( rb.velocity.magnitude, 0);
+            }
+                currGrav = GRAVITY.RIGHT;
+
+        } else if (newGrav.Equals(GRAVITY.LEFT)) {
             if (!rotLevel)
+            {
                 Physics2D.gravity = GRAV_LEFT;
-			currGrav = GRAVITY.LEFT;
+                rb.velocity = new Vector2(-rb.velocity.magnitude, 0);
+            }
+                currGrav = GRAVITY.LEFT;
 		}
 		// Play a sound effect for feedback.
 		audi.PlayOneShot(gravSFX);
@@ -222,10 +242,17 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetKey(KeyCode.A))
         {
             Movement(MOVE.LEFT);
+            anim.SetBool("IsFloating", true);
+            gameObject.GetComponent<SpriteRenderer>().flipX = true;
         }
         else if (Input.GetKey(KeyCode.D))
         {
             Movement(MOVE.RIGHT);
+            anim.SetBool("IsFloating", true);
+            gameObject.GetComponent<SpriteRenderer>().flipX = false;
+        } else
+        {
+            anim.SetBool("IsFloating", false);
         }
 
 
