@@ -33,6 +33,12 @@ EditorBuildSettings:
     path: Assets/Scenes/N-1.unity
     guid: 7a47f3443212cdf46bb3c456e2a10127
   - enabled: 1
+    path: Assets/Scenes/N-2.unity
+    guid: 7403de2faa4ee944988f2a8006d5e371
+  - enabled: 1
+    path: Assets/Scenes/N-3.unity
+    guid: 3393c99227452ba4aaed20121dac0444
+  - enabled: 1
     path: Assets/Scenes/N-Boss.unity
     guid: c57a1bc25f9de794380261a9c5044f1e
   - enabled: 1
