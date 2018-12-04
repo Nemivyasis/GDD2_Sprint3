@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour {
 	private Joycon j;
 	private Vector3 accel; // Acceleration vector of the controller.
 
-	private enum GRAVITY {UP, DOWN, LEFT, RIGHT};
+	private enum GRAVITY {UP, LEFT, DOWN, RIGHT};
 	private GRAVITY currGrav; // The current state of gravity.
 
 	private Vector2 GRAV_DOWN = new Vector3(0.0f, -2.5f);
@@ -92,7 +92,6 @@ public class PlayerMovement : MonoBehaviour {
 	 * param[newGrav] - a GRAVITY enum for the four possible directions of gravity.
 	 */
 	private void GravitySwitch(GRAVITY newGrav) {
-        
 
         if (newGrav.Equals(GRAVITY.DOWN)) {
             if (!rotLevel)
@@ -212,19 +211,96 @@ public class PlayerMovement : MonoBehaviour {
 			accel = j.GetAccel(); 
 			GravityCheck();
 		}
-        
-		// Handle keyboard inputs for switching the gravity of the player.
-		if (Input.GetKeyDown(tiltUp) && currGrav != GRAVITY.UP) { // Set Gravity to Up.
-			GravitySwitch(GRAVITY.UP);
-        } else if (Input.GetKeyDown(tiltDown) && currGrav != GRAVITY.DOWN) { // Set Gravity to Down.
-			GravitySwitch(GRAVITY.DOWN);
-            //transform.Rotate(new Vector3(0, 0, 1) * rotationSpeed * Time.deltaTime, Space.World);
-        } else if (Input.GetKeyDown(tiltLeft) && currGrav != GRAVITY.LEFT) { // Set Gravity to Left.
-			GravitySwitch(GRAVITY.LEFT);
-		} else if (Input.GetKeyDown(tiltRight) && currGrav != GRAVITY.RIGHT) { // Set Gravity to Right.
-			GravitySwitch(GRAVITY.RIGHT);
-		}
 
+        if (!rotLevel)
+        {
+            // Handle keyboard inputs for switching the gravity of the player.
+            if (Input.GetKeyDown(tiltUp) && currGrav != GRAVITY.UP)
+            { // Set Gravity to Up.
+                if (!rotLevel)
+                    GravitySwitch(GRAVITY.UP);
+                else
+                {
+                    int test = ((int)currGrav + 2) % 4;
+                    Debug.Log(test);
+                    GravitySwitch((GRAVITY)test);
+                }
+            }
+            else if (Input.GetKeyDown(tiltDown) && currGrav != GRAVITY.DOWN)
+            { // Set Gravity to Down.
+                if (!rotLevel)
+                    GravitySwitch(GRAVITY.DOWN);
+                //transform.Rotate(new Vector3(0, 0, 1) * rotationSpeed * Time.deltaTime, Space.World);
+            }
+            else if (Input.GetKeyDown(tiltLeft) && currGrav != GRAVITY.LEFT)
+            { // Set Gravity to Left.
+                if (!rotLevel)
+                    GravitySwitch(GRAVITY.LEFT);
+                else
+                {
+                    int test = ((int)currGrav - 1) % 4;
+                    Debug.Log(test);
+                    GravitySwitch((GRAVITY)test);
+                }
+            }
+            else if (Input.GetKeyDown(tiltRight) && currGrav != GRAVITY.RIGHT)
+            { // Set Gravity to Right.
+                if (!rotLevel)
+                    GravitySwitch(GRAVITY.RIGHT);
+                else
+                {
+                    int test = ((int)currGrav + 1) % 4;
+                    Debug.Log(test);
+                    GravitySwitch((GRAVITY)test);
+                }
+            }
+        }
+        else
+        {
+            // Handle keyboard inputs for switching the gravity of the player.
+            if (Input.GetKeyDown(tiltUp))
+            { // Set Gravity to Up.
+                if (!rotLevel)
+                    GravitySwitch(GRAVITY.UP);
+                else
+                {
+                    int newGrav = ((int)currGrav + 2) % 4;
+                    Debug.Log(newGrav);
+                    GravitySwitch((GRAVITY)newGrav);
+                }
+            }
+            else if (Input.GetKeyDown(tiltDown) && currGrav != GRAVITY.DOWN)
+            { // Set Gravity to Down.
+                if (!rotLevel)
+                    GravitySwitch(GRAVITY.DOWN);
+                //transform.Rotate(new Vector3(0, 0, 1) * rotationSpeed * Time.deltaTime, Space.World);
+            }
+            else if (Input.GetKeyDown(tiltLeft))
+            { // Set Gravity to Left.
+                if (!rotLevel)
+                    GravitySwitch(GRAVITY.LEFT);
+                else
+                {
+                    int newGrav = ((int)currGrav - 1);
+                    if(newGrav == -1)
+                    {
+                        newGrav = 3;
+                    }
+                    GravitySwitch((GRAVITY)newGrav);
+                }
+            }
+            else if (Input.GetKeyDown(tiltRight))
+            { // Set Gravity to Right.
+                if (!rotLevel)
+                    GravitySwitch(GRAVITY.RIGHT);
+                else
+                {
+                    int newGrav = ((int)currGrav + 1) % 4;
+                    Debug.Log(newGrav);
+                    GravitySwitch((GRAVITY)newGrav);
+                }
+            }
+        }
         if (!rotLevel)
         {
             //handles the rotation of the character when the y gravity is manipulated

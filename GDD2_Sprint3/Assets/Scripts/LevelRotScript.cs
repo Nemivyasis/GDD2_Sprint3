@@ -54,7 +54,6 @@ public class LevelRotScript : MonoBehaviour {
             turnLerp = 1;
         }
 
-        Debug.Log(turnLerp);
         Vector3 newRot = Vector3.zero;
 
 
@@ -62,11 +61,11 @@ public class LevelRotScript : MonoBehaviour {
         {
             newRot = Vector3.Lerp(transform.rotation.eulerAngles, new Vector3(0.0f, 0.0f, 180.0f), turnLerp);
         }
-        else if (currGrav == 1 && (Vector3.Distance(transform.eulerAngles, Vector3.zero) > 0.01f))
+        else if (currGrav == 2 && (Vector3.Distance(transform.eulerAngles, Vector3.zero) > 0.01f))
         {
             newRot = Vector3.Lerp(transform.rotation.eulerAngles, Vector3.zero, turnLerp);
         }
-        else if (currGrav == 2)
+        else if (currGrav == 1)
         {
             newRot = Vector3.Lerp(transform.rotation.eulerAngles, new Vector3(0.0f, 0.0f, 90.0f), turnLerp);
         }
