@@ -48,6 +48,8 @@ public class ResetDeathManager : MonoBehaviour {
         isDead = true;
         player.GetComponent<Rigidbody2D>().isKinematic = true;
 
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
         foreach (var item in displayOnDeath)
         {
             item.SetActive(true);
@@ -56,7 +58,10 @@ public class ResetDeathManager : MonoBehaviour {
 
     private void Reset()
     {
-		if (PlayerPrefs.GetInt("lives") <= 0) {
+        GameObject.FindGameObjectWithTag("Level").GetComponent<LevelRotScript>().Reset();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().ResetGrav();
+
+        if (PlayerPrefs.GetInt("lives") <= 0) {
 			return;
 		}
         isDead = false;

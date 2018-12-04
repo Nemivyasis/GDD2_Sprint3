@@ -84,6 +84,10 @@ public class PlayerMovement : MonoBehaviour {
 		} 
 	}
 
+    public void ResetGrav()
+    {
+        GravitySwitch(GRAVITY.DOWN);
+    }
 	/** Switches gravity and rumbles the controller.
 	 * param[newGrav] - a GRAVITY enum for the four possible directions of gravity.
 	 */

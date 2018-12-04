@@ -21,6 +21,15 @@ public class LevelRotScript : MonoBehaviour {
 		
 	}
 
+    public void Reset()
+    {
+        prevAngle = 2;
+        inRot = false;
+        turnLerp = 0;
+
+        transform.eulerAngles = Vector3.zero;
+    }
+
     public void Rotate(int currGrav)
     {
         if(currGrav == prevAngle)
