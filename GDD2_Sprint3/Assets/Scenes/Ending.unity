@@ -221,7 +221,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.25
+  m_Volume: 0.125
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -329,6 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9614e9306a865ba46afebd0c8cdec006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MAX_VOLUME: 1
   speaker: {fileID: 1556707023465396, guid: d2fdb84090f2adf45aaa464560c595b2, type: 2}
   damagedSFX: {fileID: 0}
   koSFX: {fileID: 0}
