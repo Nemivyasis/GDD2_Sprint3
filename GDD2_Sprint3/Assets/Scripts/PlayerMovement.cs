@@ -77,12 +77,12 @@ public class PlayerMovement : MonoBehaviour {
 			GravitySwitch(GRAVITY.DOWN);
 		} else if (currGrav != GRAVITY.UP && accel.y + (-Mathf.Abs(accel.z)) <= -1.0f) { // Our controller is upside-down. Gravity points up.
 			GravitySwitch(GRAVITY.UP);
-		} else if (currGrav != GRAVITY.RIGHT && accel.x + (Mathf.Abs(accel.z)) >= 1.0f) { // Our controller is 90 degrees clockwise. Gravity points right.
+        } else if (currGrav != GRAVITY.RIGHT && accel.x + (Mathf.Abs(accel.z)) >= 1.0f) { // Our controller is 90 degrees clockwise. Gravity points right.
 			GravitySwitch(GRAVITY.RIGHT);
 		} else if (currGrav != GRAVITY.LEFT && accel.x + (-Mathf.Abs(accel.z)) <= -1.0f) { // Our controller is 90 degrees counterclockwise. Gravity points left.
 			GravitySwitch(GRAVITY.LEFT);
 		} 
-	}
+    }
 
     public void ResetGrav()
     {
@@ -196,6 +196,8 @@ public class PlayerMovement : MonoBehaviour {
 	 */
 	void Update () {
 
+        print(currGrav);
+
         //don't move if dead
         if (deathCheck.isDead)
         {
@@ -300,6 +302,7 @@ public class PlayerMovement : MonoBehaviour {
                     GravitySwitch((GRAVITY)newGrav);
                 }
             }
+
         }
         if (!rotLevel)
         {
