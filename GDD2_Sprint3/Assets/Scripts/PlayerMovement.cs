@@ -73,7 +73,9 @@ public class PlayerMovement : MonoBehaviour {
 		if ((j.GetButton(Joycon.Button.SL) || j.GetButton(Joycon.Button.SR))) { // When holding SL or SR, do not gravity switch.
 			return;
 		}
-		if (currGrav != GRAVITY.DOWN && accel.y + (Mathf.Abs(accel.z)) >= 1.0f) { // Our controller is upright. Gravity points down.
+		if ((Mathf.Abs(accel.z)) >= 0.9f) {
+			return;
+		} else if (currGrav != GRAVITY.DOWN && accel.y + (Mathf.Abs(accel.z)) >= 1.0f) { // Our controller is upright. Gravity points down.
 			GravitySwitch(GRAVITY.DOWN);
 		} else if (currGrav != GRAVITY.UP && accel.y + (-Mathf.Abs(accel.z)) <= -1.0f) { // Our controller is upside-down. Gravity points up.
 			GravitySwitch(GRAVITY.UP);
@@ -81,7 +83,7 @@ public class PlayerMovement : MonoBehaviour {
 			GravitySwitch(GRAVITY.RIGHT);
 		} else if (currGrav != GRAVITY.LEFT && accel.x + (-Mathf.Abs(accel.z)) <= -1.0f) { // Our controller is 90 degrees counterclockwise. Gravity points left.
 			GravitySwitch(GRAVITY.LEFT);
-		} 
+		}
     }
 
     public void ResetGrav()
