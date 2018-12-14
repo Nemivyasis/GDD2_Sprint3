@@ -24,12 +24,6 @@ public class Jukebox : MonoBehaviour {
 	private const float EPSILON = 0.05f;
 	private const int ONE_SEC = 60;
 
-	public void Update() {
-		if (Input.GetKeyDown(KeyCode.Alpha1)) {
-			AddSpeaker(1);
-		}
-	}
-
 	/** Fade out the audio on all of our speakers.
 	 * Loop through all speakers and call "subspeaker" on them, which'll
 	 * lerp their volumes out.
@@ -56,7 +50,13 @@ public class Jukebox : MonoBehaviour {
 	 * param[speakerIndex] - int; the index of the speaker we want to lerp.
 	 */
 	public void AddSpeaker(int speakerIndex) {
-		StartCoroutine(VRLerp(speakerIndex));
+		for (int i = 0; i < audioSrcs.Count; i++) {
+			if (i == speakerIndex) {
+				StartCoroutine(VRLerp(i));
+			} else {
+				StartCoroutine(VRFade(i));
+			}
+		}
 	}
 
 	/** Calls a function to select a speaker to lerp down to volume zero.
@@ -173,14 +173,14 @@ public class Jukebox : MonoBehaviour {
 	}
 
 	/** Lerps a selected speaker to become inaudible over one second. 
-	 * Gradually lerps a speaker's volume to become 0.
+	 * Gradually lerps a speaker's volume to become low.
 	 * param[speakerIndex] - int; the index of the speaker we want to lerp.
 	 */
 	private IEnumerator VRFade(int speakerIndex) {
 		float timer = 0;
 		AudioSource currSpeaker = audioSrcs[speakerIndex];
 		for (int i = 0; i < ONE_SEC; i++) {
-			currSpeaker.volume = Mathf.Lerp((MAX_VOLUME / audioLayersIntros.Length) * 2, 0, timer);
+			currSpeaker.volume = Mathf.Lerp((MAX_VOLUME / audioLayersIntros.Length) * 2, (MAX_VOLUME / audioLayersIntros.Length), timer);
 			timer += Time.fixedDeltaTime;
 			yield return new WaitForSeconds(Time.fixedDeltaTime);
 		}
