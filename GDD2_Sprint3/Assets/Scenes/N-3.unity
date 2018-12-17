@@ -1035,7 +1035,7 @@ Transform:
   - {fileID: 1138850678}
   - {fileID: 1794436106}
   m_Father: {fileID: 2039010759}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1001 &426020071
 Prefab:
@@ -2540,7 +2540,7 @@ Prefab:
         type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 9cdd8923322cfb043bc0ea35ea433462,
+      objectReference: {fileID: 21300000, guid: 4fc85adb4a2369a468b08f3f83e9925e,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 037d5c0677bba0a46a89a1f248099cfa, type: 2}
@@ -3611,7 +3611,7 @@ Transform:
   - {fileID: 1016494309}
   - {fileID: 720887888}
   m_Father: {fileID: 2039010759}
-  m_RootOrder: 10
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1001 &1721864550
 Prefab:
@@ -4432,12 +4432,12 @@ Transform:
   - {fileID: 1292670485}
   - {fileID: 387964441}
   - {fileID: 357780993}
+  - {fileID: 1652889018}
   - {fileID: 154104658}
   - {fileID: 1445326338}
   - {fileID: 1146672497}
-  - {fileID: 1652889018}
-  - {fileID: 1721864551}
   - {fileID: 414425526}
+  - {fileID: 1721864551}
   - {fileID: 653563581}
   m_Father: {fileID: 0}
   m_RootOrder: 5
