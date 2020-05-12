@@ -5,7 +5,10 @@ using UnityEngine;
 public class ResetDeathManager : MonoBehaviour {
 
     public bool isDead = false;
+
+    #if UNITY_STANDALONE || UNITY_EDITOR
     private Joycon joy;
+    #endif
 
     private Vector3 startPosition;
 
@@ -15,7 +18,9 @@ public class ResetDeathManager : MonoBehaviour {
     public GameObject[] displayOnDeath;
     // Use this for initialization
     void Start () {
+        #if UNITY_STANDALONE || UNITY_EDITOR
         joy = JoyconManager.Instance.j;
+        #endif
         startPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
 
         checkpointNum = GameObject.FindGameObjectsWithTag("Checkpoint").Length;
@@ -28,6 +33,7 @@ public class ResetDeathManager : MonoBehaviour {
 
         if (isDead)
         {
+            #if UNITY_STANDALONE || UNITY_EDITOR
             if (joy != null)
             {
                 if (joy.GetButton(Joycon.Button.SR) || joy.GetButton(Joycon.Button.SL))
@@ -35,6 +41,7 @@ public class ResetDeathManager : MonoBehaviour {
                     Reset();
                 }
             }
+            #endif
 
             if (Input.GetKeyDown(KeyCode.R))
             {

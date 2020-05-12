@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_STANDALONE || UNITY_EDITOR
 public class JoyconDemo : MonoBehaviour {
 	
     private Joycon j;
@@ -73,3 +74,4 @@ public class JoyconDemo : MonoBehaviour {
         }
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if UNITY_STANDALONE || UNITY_EDITOR
 #define DEBUG
 
 using System.Collections;
@@ -688,3 +689,5 @@ public class Joycon
         DebugPrint(string.Format(format, tostr), d);
     }
 }
+
+#endif

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#if UNITY_STANDALONE || UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -41,3 +42,5 @@ public class JoyconManager: MonoBehaviour
         j.Detach();
     }
 }
+
+#endif

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_STANDALONE || UNITY_EDITOR
+using UnityEngine;
 using System.Runtime.InteropServices;
 using System.Collections;
 using System;
@@ -75,3 +76,4 @@ struct hid_device_info {
     public int interface_number;
     public IntPtr next;
 }
+#endif

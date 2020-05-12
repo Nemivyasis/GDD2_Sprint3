@@ -11,7 +11,9 @@ public class PlayerMovement : MonoBehaviour {
     public bool rotLevel = false;
 	public KeyCode tiltUp, tiltDown, tiltLeft, tiltRight; // Keyboard controls for triggering the gravity changes.
 
+    #if UNITY_STANDALONE || UNITY_EDITOR
 	private Joycon j;
+    #endif
 	private Vector3 accel; // Acceleration vector of the controller.
 
 	private enum GRAVITY {UP, LEFT, DOWN, RIGHT};
@@ -25,7 +27,10 @@ public class PlayerMovement : MonoBehaviour {
     private enum MOVE { LEFT, RIGHT };
     private MOVE currentMovement;
     public Vector3 currentPos;
+
+    #if UNITY_STANDALONE || UNITY_EDITOR
     float[] jStick; // store the value of joycon stick position
+    #endif
 
     public float maxFallSpeed;
 
@@ -59,7 +64,9 @@ public class PlayerMovement : MonoBehaviour {
 	// Get the Joycon object; note that the JoyconManager is required.
 	private void Start() {
 		// Get the public Joycon object attached to the JoyconManager in scene
+        #if UNITY_STANDALONE || UNITY_EDITOR
 		j = JoyconManager.Instance.j;
+        #endif
 
         rotationSpeed = 100.0f;
         currentPos = transform.position;
@@ -69,6 +76,7 @@ public class PlayerMovement : MonoBehaviour {
 	 * Also makes sure we don't call a Gravity Switch when it's not necessary (e.g calling a GravitySwitch(DOWN) when we're already pointing down).
 	 * PRECONDITION: There must be a Joycon present to call this code.
 	 */
+     #if UNITY_STANDALONE || UNITY_EDITOR
 	private void GravityCheck() {
 		if ((j.GetButton(Joycon.Button.SL) || j.GetButton(Joycon.Button.SR))) { // When holding SL or SR, do not gravity switch.
 			return;
@@ -85,6 +93,7 @@ public class PlayerMovement : MonoBehaviour {
 			GravitySwitch(GRAVITY.LEFT);
 		}
     }
+    #endif
 
     public void ResetGrav()
     {
@@ -130,9 +139,11 @@ public class PlayerMovement : MonoBehaviour {
 		// Play a sound effect for feedback.
 		audi.PlayOneShot(gravSFX);
 		// Rumble the controller for feedback.
+        #if UNITY_STANDALONE || UNITY_EDITOR
 		if (j != null) {
 			//j.SetRumble (160, 320, 0.6f, 200);
 		}
+        #endif
 	}
 
     /* Changes position of the player
@@ -211,10 +222,12 @@ public class PlayerMovement : MonoBehaviour {
             rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxFallSpeed);
         }
 
+        #if UNITY_STANDALONE || UNITY_EDITOR
         if (j != null) { 
 			accel = j.GetAccel(); 
 			GravityCheck();
 		}
+        #endif
 
         if (!rotLevel)
         {
@@ -351,6 +364,7 @@ public class PlayerMovement : MonoBehaviour {
 
 
         // switch stick controls
+        #if UNITY_STANDALONE || UNITY_EDITOR
         if (j != null)
         {
             jStick = j.GetStick(); // jStick[0] is x position of stick, jStick[1] is y position
@@ -400,6 +414,7 @@ public class PlayerMovement : MonoBehaviour {
             }
 
         }
+        #endif
     }
 
 	// Code to play the sound for hitting the floor.
